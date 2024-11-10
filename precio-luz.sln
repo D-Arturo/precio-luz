@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "precio-luz", "precio-luz\precio-luz.csproj", "{4E2E5CBD-5E29-4B7A-A7A1-11B031A0DD89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{512ABC35-441D-403D-9653-09E4321AE26A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E2E5CBD-5E29-4B7A-A7A1-11B031A0DD89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2E5CBD-5E29-4B7A-A7A1-11B031A0DD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2E5CBD-5E29-4B7A-A7A1-11B031A0DD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2E5CBD-5E29-4B7A-A7A1-11B031A0DD89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{512ABC35-441D-403D-9653-09E4321AE26A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512ABC35-441D-403D-9653-09E4321AE26A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512ABC35-441D-403D-9653-09E4321AE26A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512ABC35-441D-403D-9653-09E4321AE26A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
