@@ -25,31 +25,32 @@ public class ElectricityPriceCalculator
         
         var hourlyPrices = HourlyInfoFromJsonResponse(json);
 
-        if (hourlyPrices.Count > 0) return hourlyPrices;
-
-        return new List<HourlyInfo> { new("No disponible", "No disponible") };
+        return hourlyPrices;
     }
 
     private List<HourlyInfo>? HourlyInfoFromJsonResponse(JObject json)
     {
         var hourlyPrices = HourlyPrices();
+        
+        if (!hourlyPrices.Any()) return new List<HourlyInfo> { new("No disponible", "No disponible") };
 
-        var hourlyInfo = new List<HourlyInfo>();
+        List<HourlyInfo> hourlyInfo = new();
 
         foreach (var (dateTime, price) in hourlyPrices)
         {
             hourlyInfo.Add(new HourlyInfo(dateTime, price));
         }
-
+        
         return hourlyInfo;
-
+        
+        
         List<(string DateTime, string? Price)>? HourlyPrices()
         {
             // Filtra los valores solo para "Península" y extrae la lista de precios y fechas
             return json["indicator"]?["values"]
                 .Where(v => v["geo_name"]?.ToString() == "Península")
                 .Select(v => (
-                    DateTime: DateTime.Parse(v["datetime"]?.ToString()).ToString("HH:mm"), // Formato de 24 horas
+                    DateTime: DateTime.Parse(v["datetime"]?.ToString()).ToString("HH:mm"),
                     Price: v["value"]?.ToString()
                 ))
                 .ToList();
