@@ -12,7 +12,7 @@ public class ElectricityPriceCalculator
         _client = client;
     }
 
-    public async Task<List<(string DateTime, string Price)>> GetElectricityPriceAsync()
+    public async Task<List<HourlyInfo>> GetElectricityPriceAsync()
     {
         var url = "https://api.esios.ree.es/indicators/1001";
         
@@ -22,23 +22,37 @@ public class ElectricityPriceCalculator
 
         var response = await _client.GetStringAsync(url);
         var json = JObject.Parse(response);
-
-        // Filtra los valores solo para "Península" y extrae la lista de precios y fechas
-        var hourlyPrices = HourlyPricesFromJsonResponse(json);
+        
+        var hourlyPrices = HourlyInfoFromJsonResponse(json);
 
         if (hourlyPrices.Count > 0) return hourlyPrices;
 
-        return new List<(string, string)> { ("No disponible", "No disponible") };
+        return new List<HourlyInfo> { new("No disponible", "No disponible") };
     }
 
-    private static List<(string DateTime, string? Price)>? HourlyPricesFromJsonResponse(JObject json)
+    private List<HourlyInfo>? HourlyInfoFromJsonResponse(JObject json)
     {
-        return json["indicator"]?["values"]
-            .Where(v => v["geo_name"]?.ToString() == "Península")
-            .Select(v => (
-                DateTime: DateTime.Parse(v["datetime"]?.ToString()).ToString("HH:mm"), // Formato de 24 horas
-                Price: v["value"]?.ToString()
-            ))
-            .ToList();
+        var hourlyPrices = HourlyPrices();
+
+        var hourlyInfo = new List<HourlyInfo>();
+
+        foreach (var (dateTime, price) in hourlyPrices)
+        {
+            hourlyInfo.Add(new HourlyInfo(dateTime, price));
+        }
+
+        return hourlyInfo;
+
+        List<(string DateTime, string? Price)>? HourlyPrices()
+        {
+            // Filtra los valores solo para "Península" y extrae la lista de precios y fechas
+            return json["indicator"]?["values"]
+                .Where(v => v["geo_name"]?.ToString() == "Península")
+                .Select(v => (
+                    DateTime: DateTime.Parse(v["datetime"]?.ToString()).ToString("HH:mm"), // Formato de 24 horas
+                    Price: v["value"]?.ToString()
+                ))
+                .ToList();
+        }
     }
 }

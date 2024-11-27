@@ -7,12 +7,12 @@ class Program
         var calculator = new ElectricityPriceCalculator( new HttpClient());
         try
         {
-            var hourlyPrice = await calculator.GetElectricityPriceAsync();
+            var hourlyInfo = await calculator.GetElectricityPriceAsync();
 
             Console.WriteLine("Precios de la luz por hora en la Península:");
-            foreach (var (dateTime, price) in hourlyPrice)
+            foreach (var hourInfo in hourlyInfo)
             {
-                Console.WriteLine($"Hora: {dateTime}, Precio: {price} euro/MWh");
+                Console.WriteLine(hourInfo.ToString());
             }
         }
         catch (Exception ex)
